@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина товаров</title>
+    <link rel="icon" th:href="@{/../images/i2.ico}">
+    <meta name="keywords" content="проектирование, инжиниринг, эксплуатация, экономика, образование">
+    <meta name="description" content="Российский экономический Университет имени Г.В. Плеханова">
+    <meta name="author" content="Суханенков Владимир Николаевич">
+    <meta name="robots" content="NOINDEX, NOFOLLOW">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="default-style"  content="default">
+    <style>
+    </style>
+</head>
+<body>
+<form method="get" th:action="@{/product}">
+    <button type="submit">Главная</button>
+</form>
+<form method="POST" th:action="@{/logout}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Выйти из личного кабинета</button>
+</form>
+<h3>Товары в вашей корзине:</h3>
+<div th:each="product: ${cart_product}">
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+    <br>
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a><br>
+    <p th:text="'Цена: ' + ${product.getPrice()}"></p><br>
+    <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить товар из корзины</a><hr>
+</div>
+<h3 th:text="'Итоговая цена: ' + ${price}"></h3>
+<a href="/order/create">Оформить заказ</a>
+<a href="javascript:history.back()">Назад</a>
+</body>
+</html>

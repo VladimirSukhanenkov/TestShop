@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование товара</title>
+    <link rel="icon" th:href="@{/../images/i2.ico}">
+    <meta name="keywords" content="проектирование, инжиниринг, эксплуатация, экономика, образование">
+    <meta name="description" content="Российский экономический Университет имени Г.В. Плеханова">
+    <meta name="author" content="Суханенков Владимир Николаевич">
+    <meta name="robots" content="NOINDEX, NOFOLLOW">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="default-style"  content="default">
+    <style>
+    </style>
+</head>
+<body>
+<form method="get" th:action="@{/product}">
+    <button type="submit">Главная</button>
+</form>
+<form method="POST" th:action="@{/logout}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Выйти из личного кабинета</button>
+</form>
+<h3>Редактирование товара</h3>
+<form method=post src=upload onsubmit="return validateFile()" th:method="POST" th:action="@{/admin/product/edit/{id}(id=${product.getId()})}" th:object="${product}" enctype="multipart/form-data">
+    <label for="title">Введите наименование товара: </label>
+    <input type="text" th:field="*{title}" placeholder="Наименование" id="title">
+    <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    <br>
+    <br>
+    <label for="description">Введите описание товара: </label>
+    <textarea th:field="*{description}" placeholder="Описание товара" id="description"></textarea>
+    <div style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <br>
+    <br>
+    <label for="price">Введите цену товара: </label>
+    <input type="number" th:field="*{price}" placeholder="Цена товара" id="price">
+    <div style="color:red" th:if="${#fields.hasErrors('price')}" min="1" step="0.10" th:errors="*{price}"></div>
+    <br>
+    <br>
+    <label for="warehouse">Введите наименование склада: </label>
+    <input type="text" th:field="*{warehouse}" placeholder="Склад" id="warehouse">
+    <div style="color:red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
+    <br>
+    <br>
+    <label for="category">Выберите категорию товара: </label>
+    <select name="category" th:field="*{category}" id="category">
+        <div th:each="element: ${category}">
+            <option th:text="${element.getTitle()}" th:value="${element.getId()}"></option>
+        </div>
+    </select>
+    <div style="color:red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div><br><br>
+    <label for="seller">Введите данные о продавце:</label>
+    <textarea th:field="*{seller}" placeholder="Продавец" id="seller"></textarea>
+    <br>
+    <br>
+    <p style="color: red">Вы можете добавить до 5 фотографий. Первая фотография не должна быть пустой,
+        т.к. она будет главной при выводе карточки товара</p>
+    <input type="file" id="file_one" name="file_one">
+    <br>
+    <input type="file" name="file_two">
+    <br>
+    <input type="file" name="file_three">
+    <br>
+    <input type="file" name="file_four">
+    <br>
+    <input type="file" name="file_five">
+    <br>
+    <br>
+    <input type="submit" value="Добавить">
+    <br>
+    <br>
+    <input type="submit" value="Сохранить">
+</form>
+<script>
+    function validateFile()
+    {
+        var allowedExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp'];
+        var fileExtension = document.getElementById('file_one').value.split('.').pop().toLowerCase();
+        var isValidFile = false;
+        for(var index in allowedExtension) {
+            if(fileExtension === allowedExtension[index]) {
+                isValidFile = true;
+                break;
+            }
+        }
+        if(!isValidFile) {
+            alert('Allowed Extensions are : *.' + allowedExtension.join(', *.'));
+        }
+        return isValidFile;
+    }
+</script>
+<br>
+<a href="javascript:history.back()">Назад</a>
+</body>
+</html>

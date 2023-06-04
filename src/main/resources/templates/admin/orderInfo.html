@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <title>Информация о заказе</title>
+  <link rel="icon" th:href="@{/../images/i2.ico}">
+  <meta name="keywords" content="проектирование, инжиниринг, эксплуатация, экономика, образование">
+  <meta name="description" content="Российский экономический Университет имени Г.В. Плеханова">
+  <meta name="author" content="Суханенков Владимир Николаевич">
+  <meta name="robots" content="NOINDEX, NOFOLLOW">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="default-style"  content="default">
+  <style>
+  </style>
+</head>
+<body>
+<form method="get" th:action="@{/product}">
+  <button type="submit">Главная</button>
+</form>
+<form method="POST" th:action="@{/logout}">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+  <button type="submit">Выйти из личного кабинета</button>
+</form>
+<br>
+<a href="/admin">Назад в личный кабинет</a>
+<br>
+<a href="/admin/orders">Назад к списку заказов</a>
+<hr>
+<br>
+<h3>Информация о заказе: </h3>
+<form th:method="post" th:action="@{/admin/order/{id}(id=${order.getId()})}" th:object="${order}">
+  <p th:text="'Номер заказа: ' + ${order.getNumber()}"></p>
+  <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+  <p th:text="'Состав заказа: ' + ${order.getProduct().getTitle()}"></p>
+  <p th:text="'Стоимость: ' + ${order.getPrice()}"></p>
+  <p th:text="'Логин покупателя: ' + ${order.getPerson().getLogin()}"></p>
+  <p th:text="'ID покупателя: ' + ${order.getPerson().getId()}"></p>
+  <p th:text="'Статус заказа: ' + ${order.getStatus()}"></p>
+  <label for="status">Изменить статус заказа: </label>
+  <select name="status" th:field="*{status}" id="status">
+    <div th:each="orderStatus: ${status}">
+      <option th:text="${orderStatus}" th:value="${orderStatus}"></option>
+    </div>
+  </select>
+  <input type="submit" value="Изменить статус">
+</form>
+<a href="javascript:history.back()">Назад</a>
+</body>
+</html>

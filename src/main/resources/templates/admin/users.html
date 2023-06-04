@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <title>Пользователи</title>
+  <link rel="icon" th:href="@{/../images/i2.ico}">
+  <meta name="keywords" content="проектирование, инжиниринг, эксплуатация, экономика, образование">
+  <meta name="description" content="Российский экономический Университет имени Г.В. Плеханова">
+  <meta name="author" content="Суханенков Владимир Николаевич">
+  <meta name="robots" content="NOINDEX, NOFOLLOW">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="default-style"  content="default">
+  <style>
+  </style>
+</head>
+<body>
+<form method="get" th:action="@{/product}">
+  <button type="submit">Главная</button>
+</form>
+<form method="POST" th:action="@{/logout}">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+  <button type="submit">Выйти из личного кабинета</button>
+</form><br>
+<a href="/admin">Назад в личный кабинет</a><hr><br>
+<h3>Список всех пользователей</h3><br>
+<div th:each="user : ${users}">
+  Логин пользователя: <a th:href="@{/admin/user/{id}(id=${user.getId()})}" th:text="${user.getLogin()}"></a>
+  <p th:text="'Роль пользователя: ' + ${user.getRole}"></p><hr><br>
+</div>
+<a href="javascript:history.back()">Назад</a>
+</body>
+</html>

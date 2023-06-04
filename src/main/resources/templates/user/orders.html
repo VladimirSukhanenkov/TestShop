@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+    <link rel="icon" th:href="@{/../images/i2.ico}">
+    <meta name="keywords" content="проектирование, инжиниринг, эксплуатация, экономика, образование">
+    <meta name="description" content="Российский экономический Университет имени Г.В. Плеханова">
+    <meta name="author" content="Суханенков Владимир Николаевич">
+    <meta name="robots" content="NOINDEX, NOFOLLOW">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="default-style"  content="default">
+    <style>
+    </style>
+</head>
+<body>
+<form method="get" th:action="@{/product}">
+    <button type="submit">Главная</button>
+</form>
+<form method="POST" th:action="@{/logout}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Выйти из личного кабинета</button>
+</form>
+<a href="javascript:history.back()">Назад</a>
+<h3>Ваши заказы</h3>
+<!--получаем и итерируем orders от метода orderUser мейнКонтроллера-->
+<div th:each="order : ${orders}">
+    <h3 th:text="'Заказ №' + ${order.getNumber()}"></h3>
+    <img th:src="'/img/' + ${order.getProduct().getImageList()[0].getFileName()}" width="300px">
+    <p th:text="'Наименование: ' + ${order.getProduct().getTitle()}">
+    <p th:text="'Количество: ' + ${order.getCount()}">
+    <p th:text="'Цена: ' + ${order.getPrice()}">
+    <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+    <p th:text="'Cтатус: ' + ${order.getStatus()}">
+
+</body>
+</html>

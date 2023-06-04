@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Личный кабинет администратора</title>
+  <link rel="icon" th:href="@{/../images/i2.ico}">
+  <meta name="keywords" content="проектирование, инжиниринг, эксплуатация, экономика, образование">
+  <meta name="description" content="Российский экономический Университет имени Г.В. Плеханова">
+  <meta name="author" content="Суханенков Владимир Николаевич">
+  <meta name="robots" content="NOINDEX, NOFOLLOW">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="default-style"  content="default">
+  <style>
+  </style>
+</head>
+<body>
+<form method="get" th:action="@{/product}">
+  <button type="submit">Главная</button>
+</form>
+<h3>Личный кабинет администратора</h3>
+<hr>
+<form method="POST" th:action="@{/logout}">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+  <button type="submit">Выйти из личного кабинета</button>
+</form>
+<hr>
+<a href="admin/product">Просмотр, добавление и редактирование товаров</a>
+<br>
+<a href="admin/orders">Просмотр заказов</a>
+<br>
+<a href="admin/users">Посмотреть информацию о пользователях</a>
+<hr>
+<a href="javascript:history.back()">Назад</a>
+</body>
+</html>

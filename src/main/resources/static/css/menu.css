@@ -1,0 +1,26 @@
+div li:hover{
+	background-color: lightgray;
+	color: blue;
+}
+a{
+	cursor: url('https://snipp.ru/demo/712/pointer-3.cur') 4 1, pointer;
+}
+.nav{
+  text-align: center;
+  font-family: osBold;
+  /*font-size: 25px;*/
+  grid-area:nav;
+}
+.nav li{
+	height: auto;
+	width: 200px;
+	float: left;
+	border: 1px solid darkblue;
+	border-radius: 15px;
+	box-shadow: 1px 1px 5px darkblue;
+	list-style: none;
+	margin-left: 5px;
+}
+.nav li a{
+  text-decoration: none;
+}

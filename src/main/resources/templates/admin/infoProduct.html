@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <title>Все товары</title>
+  <link rel="icon" th:href="@{/../images/i2.ico}">
+  <meta name="keywords" content="проектирование, инжиниринг, эксплуатация, экономика, образование">
+  <meta name="description" content="Российский экономический Университет имени Г.В. Плеханова">
+  <meta name="author" content="Суханенков Владимир Николаевич">
+  <meta name="robots" content="NOINDEX, NOFOLLOW">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="default-style"  content="default">
+  <style>
+  </style>
+</head>
+<body>
+<form method="get" th:action="@{/product}">
+  <button type="submit">Главная</button>
+</form>
+<form method="POST" th:action="@{/logout}">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+  <button type="submit">Выйти из личного кабинета</button>
+</form>
+<h3>Просмотр всех товаров</h3><hr><hr>
+<a href="/admin">Назад в личный кабинет администратора</a><br>
+<a href="/admin/product/add">Добавить новый товар</a><hr>
+<div th:each="product : ${products}">
+  <h3>Сортировка, поиск, фильтрация</h3>
+  <form th:method="POST" th:action="@{/person account/product/search}">
+    <fieldset>
+      <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
+      <label for="search">Поиск по наименованию</label>
+      <input type="text" id="search" name="search" th:value="*{value_search}">
+      <br>
+      <p>Цена, Р</p>
+      <label for="ot">От</label>
+      <input type="text" name="ot" id="ot" th:value="*{value_price_ot}">
+      <label for="do">До</label>
+      <input type="text" name="do" id="do" th:value="*{value_price_do}">
+      <br>
+      <br>
+      <div>
+        <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+        <label for="ascending_price">Отсортировать по возрастанию цены</label>
+        <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+        <label for="descending_price">Отсортировать по убыванию цены</label>
+        <p>Категория товара:</p>
+        <input type="radio" id="furniture" name="contract" value="furniture">
+        <label for="furniture">Мебель</label>
+        <input type="radio" id="appliances" name="contract" value="appliances">
+        <label for="appliances">Бытовая техника</label>
+        <input type="radio" id="clothes" name="contract" value="clothes">
+        <label for="clothes">Одежда</label>
+        <br>
+        <br>
+        <input type="submit" value="Найти">
+      </div>
+    </fieldset>
+  </form>
+  <div th:each="product: ${search_product}">
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px"><br>
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+    <p th:text="'Цена: ' + ${product.getPrice()}"></p><hr>
+  </div>
+  <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
+  <p th:text="'Категория: ' + ${product.getCategory().getTitle()}"></p>
+  <img th:src="'/img/'+${product.imageList[0].getFileName()}" width="100px">
+  <br>
+  <a th:href="@{/product/info/{id}(id=${product.getId()})}">Подробная информация о товаре</a>
+  <br>
+  <a th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактировать товар</a>
+  <br>
+  <a th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удалить товар</a>
+  <hr>
+  <br>
+</div>
+<a href="javascript:history.back()">Назад</a>
+</body>
+</html>
