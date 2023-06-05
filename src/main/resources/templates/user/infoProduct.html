@@ -29,13 +29,13 @@
                 <li><a href="/authentication"><i class="fa fa-user-o"></i>Войти в систему</a></li>
                 <form method="POST" th:action="@{/logout}">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                    <button type="submit">Выйти из личного кабинета</button>
+                    <button type="submit">Выйти из кабинета</button>
                 </form>
             </ul>
         </div>
     </div>
     <h3>Сортировка, поиск, фильтрация</h3>
-    <form th:method="POST" th:action="@{/person account/product/search}">
+    <form th:method="POST" th:action="@{/person_account/product/search}">
         <fieldset>
             <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
             <label for="search">Поиск по наименованию</label>
@@ -83,9 +83,7 @@
                                 <i class="fa fa-shopping-cart"></i></a>
                             <h3>Вход</h3>
                             <form method="post" action="/process_login">
-                                <!--Внедряем токен csrf в форму через скрытое поле-->
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                                <!-- Обязательно использовать имена username и password - это зарезервированные слова SS, по ним он перехватит данные -->
                                 <label for="username"></label>
                                 <input type="text" placeholder="Введите логин" name="username" id="username">
                                 <br>
@@ -155,7 +153,7 @@
                                 <h3 class="product-price" th:text="'Цена: ' + ${product.getPrice()}"></h3>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>в корзину</button>
+                                <a th:href="@{/cart/add/{id}(id=${product.getId()})}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>в корзину</button></a>
                             </div>
                         </div>
                     </div>
@@ -173,7 +171,7 @@
                     <h3 class="product-price" th:text="'Цена: ' + ${product.getPrice()}"></h3>
                 </div>
                 <div class="add-to-cart">
-                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>в корзину</button>
+                    <a th:href="@{/cart/add/{id}(id=${product.getId()})}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>в корзину</button></a>
                 </div>
             </div>
         </div>
@@ -206,7 +204,7 @@
                         <hr>
                         <br>
                         <div class="add-to-cart">
-                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>в корзину</button>
+                            <a th:href="@{/cart/add/{id}(id=${product.getId()})}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>в корзину</button></a>
                         </div>
                     </div>
                 </div>
@@ -220,7 +218,8 @@
             <div class="row">
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <ul class="list-inline" class="footer-links">
+                        <ul>
+<!--                        <ul class="list-inline" class="footer-links">-->
                             <li><a href="#"><i class="fa fa-map-marker"></i>Адрес</a></li>
                             <li><a href="#"><i class="fa fa-phone"></i>Телефон</a></li>
                             <li><a href="#"><i class="fa fa-envelope-o"></i>Электронная почта</a></li>

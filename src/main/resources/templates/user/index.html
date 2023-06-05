@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Главная страница</title>
     <link rel="icon" th:href="@{/../images/i2.ico}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" th:href="@{/../css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/../css/slick.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/../css/slick-theme.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/../css/nouislider.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/../css/style.css}"/>
     <meta name="keywords" content="проектирование, инжиниринг, эксплуатация, экономика, образование">
     <meta name="description" content="Российский экономический Университет имени Г.В. Плеханова">
     <meta name="author" content="Суханенков Владимир Николаевич">
@@ -14,13 +20,67 @@
     </style>
 </head>
 <body>
+<header>
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-left, list-inline">
+                <li><a href="#"><i class="fa fa-phone"></i>Телефон</a></li>
+                <li><a href="#"><i class="fa fa-envelope-o"></i>Электронная почта</a></li>
+                <li><a href="#"><i class="fa fa-map-marker"></i>Адрес</a></li>
+            </ul>
+
+        </div>
+    </div>
+    <div id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i></a>
+                            <h3>Вход</h3>
+                            <form method="post" action="/process_login">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                <label for="username"></label>
+                                <input type="text" placeholder="Введите логин" name="username" id="username"><br>
+                                <label for="password"></label>
+                                <input type="password" placeholder="Введите пароль" name="password" id="password"><br>
+                                <input type="submit" value="Войти в кабинет">
+                            </form>
+
+                            <div th:if="${param.error}" style="color: red">
+                                Неправильный логин или пароль
+                            </div>
+                            <form method="POST" th:action="@{/logout}">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                <button type="submit">Выйти из кабинета</button>
+                            </form>
+                            <div>
+                                <a href="/registration">Регистрация</a><br><br>
+                            </div>
+                            <br>
+                            <div>
+                                <a href="javascript:history.back()">Назад</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</header>
+<div class="window">
+<h2>В кабинет</h2>
 <form method="get" th:action="@{/product}">
     <button type="submit">Главная</button>
 </form>
-<h2>Личный кабинет</h2>
 <form method="POST" th:action="@{/logout}">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-    <button type="submit">Выйти из личного кабинета</button>
+    <button type="submit">Выйти из кабинета</button>
 </form>
 <br>
 <form method="get" th:action="@{/cart}">
@@ -32,7 +92,7 @@
 </form>
 <br>
 <h3>Сортировка, поиск, фильтрация</h3>
-<form th:method="POST" th:action="@{/person account/product/search}">
+<form th:method="POST" th:action="@{/person_account/product/search}">
     <fieldset>
         <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
         <label for="search">Поиск по наименованию</label>
@@ -70,7 +130,7 @@
     <br>
     <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
     <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-    <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить товар в корзину</a>
+    <a th:href="@{/cart/add/{id}(id=${product.getId()})}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>в корзину</button></a>
     <hr>
 </div>
 <h3>Доступные товары: </h3>
@@ -78,9 +138,43 @@
         <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px"><br>
         <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
         <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-        <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить товар в корзину</a><hr>
+    <a th:href="@{/cart/add/{id}(id=${product.getId()})}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>в корзину</button></a>
 </div>
 </form>
 <a href="javascript:history.back()">Назад</a>
+</div>
+<footer id="footer">
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <ul>
+<!--                        <ul class="list-inline" class="footer-links">-->
+                            <li><a href="#"><i class="fa fa-map-marker"></i>Адрес</a></li>
+                            <li><a href="#"><i class="fa fa-phone"></i>Телефон</a></li>
+                            <li><a href="#"><i class="fa fa-envelope-o"></i>Электронная почта</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix visible-xs"></div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom-footer" class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" th:src="@{/../js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/../js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/../js/slick_min.js}"></script>
+<script type="text/javascript" th:src="@{/../js/nouislider.min.js}"></script>
+<script type="text/javascript" th:src="@{/../js/jquery.zoom.min.js}"></script>
+<script type="text/javascript" th:src="@{/../js/main.js}"></script>
 </body>
 </html>

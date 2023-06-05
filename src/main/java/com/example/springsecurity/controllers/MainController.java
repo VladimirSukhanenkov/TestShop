@@ -26,7 +26,9 @@ import java.util.UUID;
 
 @Controller
 public class MainController {
+
     private final PersonValidator personValidator;
+
     private final PersonService personService;
 
     private final ProductService productService;
@@ -75,16 +77,16 @@ public class MainController {
             PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
             String role = personDetails.getPerson().getRole();
             if (role.equals("ROLE_ADMIN")) {
-                System.out.println("111111");
+//                System.out.println("111111");
                 return "redirect:/admin";
             }
             else if (role.equals("ROLE_USER")) {
-                System.out.println("2222222");
+//                System.out.println("2222222");
                 return "redirect:/user/product";
             }
 
         } catch (ClassCastException e){
-            System.out.println("333333");
+//            System.out.println("333333");
         }
         return "redirect:/product";
     }
@@ -117,7 +119,7 @@ public class MainController {
     }
 
     // Обработка формы поиска товара (с представления index,
-    @PostMapping("/person account/product/search")
+    @PostMapping("/person_account/product/search")
     public String productSearch(@RequestParam("search") String search,
                                 @RequestParam("ot") String ot,
                                 @RequestParam("do") String Do,
@@ -192,8 +194,6 @@ public class MainController {
         // Записываем объект в репозиторий (в БД)
         cartRepository.save(cart);
         return "redirect:/cart";
-
-
     }
 
     // Обрабатываем редирект после добавления в корзину
@@ -265,7 +265,7 @@ public class MainController {
             productList.add(productService.getProductById((cart.getProductId())));
         }
         // Вычисление итоговой цены товаров в корзине
-        float price=0;
+        float price = 0;
         for (Product product: productList) {
             price += product.getPrice();
         }
