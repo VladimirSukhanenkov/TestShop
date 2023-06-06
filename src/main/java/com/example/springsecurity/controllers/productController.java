@@ -37,7 +37,8 @@ public class productController {
     public String infoProduct(@PathVariable("id") int id, Model model) {
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("products", productService.getAllProduct());
-        return "product/infoProduct";
+//        System.out.println("fooo");
+        return "/product/infoProduct";
     }
 
     // Обработка формы поиска товара (с представлений product,

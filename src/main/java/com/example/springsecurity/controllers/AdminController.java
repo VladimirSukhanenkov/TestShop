@@ -62,10 +62,11 @@ public class AdminController {
 
     // По ссылке admin/product/add возвращаем представление product/addProduct, создаем новый Product,
     // получаем все категории товаров из репозитория категорий - их будет использовать select в представлении
-    @GetMapping("admin/product/add")
+    @GetMapping("/admin/product/add")
     public String addProduct(Model model) {
         model.addAttribute("product", new Product());
         model.addAttribute("category", categoryRepository.findAll());
+        System.out.println("fiii");
         return "product/addProduct";
     }
 
@@ -81,6 +82,7 @@ public class AdminController {
                              @RequestParam("file_four") MultipartFile file_four,
                              @RequestParam("file_five") MultipartFile file_five,
                              @RequestParam("category") int category, Model model) throws IOException {
+//        System.out.println("foo");
         Category category_db = categoryRepository.findById(category).orElseThrow();
         if (bindingResult.hasErrors()) {
             // Если есть ошибки валидации, то сначала возвращаем список категорий(иначе они на шаблоне не выведутся), а потом представление
@@ -278,7 +280,7 @@ public class AdminController {
     public String showAllOrders(Model model) {
         model.addAttribute("orders", orderService.getAllOrders());
         model.addAttribute("status", Status.values());
-        return "/admin/orders";
+        return "admin/orders";
     }
 
     // Подробная информация о заказе и изменение его статуса
@@ -286,7 +288,7 @@ public class AdminController {
     public String orderInfo(@PathVariable("id") int id, Model model) {
         model.addAttribute("order", orderService.getOrderById(id));
         model.addAttribute("status", Status.values());
-        return "/admin/orderInfo";
+        return "admin/orderInfo";
     }
 
     // Изменение статуса заказа на странице с заказами
@@ -309,7 +311,7 @@ public class AdminController {
         // Кладём в модель обратно полученные значения с формы для того, чтобы после отправки формы (произойдёт перезагрузка
         // страницы) отправить в инпут ранее введённое значение
         model.addAttribute("value_search", search);
-        return "/admin/orders";
+        return "admin/orders";
     }
 
     // Отображение страницы со всеми пользователями
@@ -317,7 +319,7 @@ public class AdminController {
     public String showAllUsers(Model model) {
         model.addAttribute("users", personService.findAllUsers());
         model.addAttribute("role", Role.values());
-        return "/admin/users";
+        return "admin/users";
     }
 
     // Подробная информация о выбранном пользователе
@@ -325,7 +327,7 @@ public class AdminController {
     public String userInfo(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", personService.findById(id));
         model.addAttribute("role", Role.values());
-        return "/admin/userInfo";
+        return "admin/userInfo";
     }
 
     @PostMapping("/admin/user/{id}")
