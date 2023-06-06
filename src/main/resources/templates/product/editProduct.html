@@ -39,32 +39,6 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <div class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                <i class="fa fa-shopping-cart"></i></a>
-                            <h3>Вход</h3>
-                            <form method="post" action="/process_login">
-                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                                <label for="username"></label>
-                                <input type="text" placeholder="Введите логин" name="username" id="username"><br>
-                                <label for="password"></label>
-                                <input type="password" placeholder="Введите пароль" name="password" id="password"><br>
-                                <input type="submit" value="Войти в кабинет">
-                            </form>
-
-                            <div th:if="${param.error}" style="color: red">
-                                Неправильный логин или пароль
-                            </div>
-                            <form method="POST" th:action="@{/logout}">
-                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                                <button type="submit">Выйти из кабинета</button>
-                            </form>
-                            <div>
-                                <a href="/registration">Регистрация</a><br><br>
-                            </div>
-                            <br>
-                            <div>
-                                <a href="javascript:history.back()">Назад</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,10 +99,6 @@
     <input type="file" name="file_four">
     <br>
     <input type="file" name="file_five">
-    <br>
-    <br>
-    <input type="submit" value="Добавить">
-    <br>
     <br>
     <input type="submit" value="Сохранить">
 </form>
